@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  width: 700px;
+  height: 700px;
+}
+
+.image{
+    height: 200px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.image img{
+    height: 100%;
+    object-fit: contain;
+}
+
+svg{
+    opacity: 0;
+}
+</style>
+<body>
+    <div class="wrapper">
+        <div class="container">
+          <svg viewBox="0 0 400 400">
+            <path stroke-width="1" stroke="black" id="circle" fill="none" d="M396,200 C396,308.24781 308.24781,396 200,396 91.75219,396 4,308.24781 4,200 4,91.75219 91.75219,4 200,4 308.24781,4 396,91.75219 396,200 z"></path>
+          </svg>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/3910065/pexels-photo-3910065.jpeg" alt="">
+          </div>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/6794043/pexels-photo-6794043.jpeg" alt="">
+          </div>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/3680203/pexels-photo-3680203.jpeg" alt="">
+          </div>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/6202036/pexels-photo-6202036.jpeg" alt="">
+          </div>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/2887774/pexels-photo-2887774.jpeg" alt="">
+          </div>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/3854478/pexels-photo-3854478.jpeg" alt="">
+          </div>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/8467429/pexels-photo-8467429.jpeg" alt="">
+          </div>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/6624869/pexels-photo-6624869.jpeg" alt="">
+          </div>
+          <div class="image">
+            <img src="https://images.pexels.com/photos/5255999/pexels-photo-5255999.jpeg" alt="">
+          </div>
+        </div>
+      </div>
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js" integrity="sha512-dgqdovLK5r/NMiV5YfWA0xC94DKGrm+6q1OZpuWHm+uBGLTck6wu58WAX9lmy8wec6cVnsgxbPJ60DtmNFnfgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/InertiaPlugin.min.js" integrity="sha512-PEhxb+AivyFXL3zZnE/TwS4sgWRDZRF7aTGVGkiF7ej++sMKTtN+ZfrEo8lPxrfMIOws/1RkVc1Apua29ktRwg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js" integrity="sha512-vuNgw6lF+p97XmL9lFpbQZWBXxIFnwUVt7J/uknE4NJru5GJjjhIAauXdDtNdezqOJFnit+M3AeaM+gZ93hlmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script>
+        const images = gsap.utils.toArray(".image");
+        const container = document.querySelector(".container");
+        gsap.set(images, {
+          motionPath: {
+            path: "#circle",
+            align: "#circle",
+            alignOrigin: [0.5, 0.5],
+            end: (i) => i / images.length,
+            autoRotate: true
+          }
+        });
+
+        Draggable.create(container, {
+          type: "rotation",
+          inertia: true,
+        });
+
+        const rotateTo = gsap.quickTo(container, "rotation", {
+          duration: 0.5,
+          ease: "power2.out",
+        });
+
+        document.addEventListener("wheel", (event) => {
+          const sensitivity = 0.5;
+          rotateTo(gsap.getProperty(container, "rotation") + event.deltaY * sensitivity);
+        });
+      </script>
+</body>
+</html>
